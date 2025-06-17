@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tool dev KHANHPC</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="GD.png">
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #2f3542, #57606f);
+    color: #f1f2f6;
+    padding: 20px;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #1e272e;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 0 24px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  ul li {
+    margin-bottom: 6px;
+  }
+  .preview {
+    margin: 20px 0;
+    background: #2f3542;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  .btn-download, .btn-guide {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 16px;
+    padding: 12px 24px;
+    background: #70a1ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .btn-download:hover, .btn-guide:hover {
+    background: #1e90ff;
+    transform: translateY(-2px);
+  }
+
+  .btn-guide .arrow {
+    margin-left: 10px;
+    transition: transform 0.4s ease;
+  }
+  .btn-guide.open .arrow {
+    transform: rotate(180deg);
+  }
+
+  img {
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 10px;
+  }
+
+  .guide {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease, opacity 0.4s ease;
+    opacity: 0;
+    margin-top: 0;
+  }
+  .guide.active {
+    max-height: 2000px; /* đủ to để chứa hướng dẫn */
+    opacity: 1;
+    margin-top: 30px;
+  }
+  .guide-inner {
+    background: #2d3436;
+    padding: 20px;
+    border-radius: 12px;
+  }
+  .guide ol li {
+    margin-bottom: 16px;
+  }
+  .guide ol img {
+    margin-top: 8px;
+    border-radius: 8px;
+    border: 2px solid #444;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+  .custom-link {
+  color: #007bff;       /* đổi màu tuỳ ý */
+  text-decoration: none; /* bỏ gạch chân */
+  font-weight: bold;     /* nếu muốn giữ đậm */
+}
+
+</style>
+  <div id="notification-bar" style="
+    width: 100%;
+    background-color: #ffcc00;
+    color: #000;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 2px solid #cc9900;
+    box-sizing: border-box;
+    position: relative;
+">
+  <div id="scrolling-wrapper" style="
+      display: inline-block;
+      white-space: nowrap;
+      will-change: transform;
+      animation: scroll-infinite 30s linear infinite;
+  ">
+    <span style="padding-right: 50px;">
+      <strong>HÃY NHỚ TẢI LẠI TRANG TRƯỚC KHI DÙNG TOOL!</strong>Hiện tại tool chỉ mới đang phát triển nên sẽ có 1 số lỗi không mong muốn Nếu các bạn muốn làm web thì có thể liên hệ mình qua website: 
+      <a href="https://aikhanh.onrender.com" target="_blank" style="color: #000; text-decoration: underline;">https://aikhanh.onrender.com</a>
+       © KHANHPC 2025| mọi quyền được bảo lưu 
+    </span>
+    <span style="padding-right: 50px;">
+      <strong>HÃY NHỚ TẢI LẠI TRANG TRƯỚC KHI DÙNG TOOL!</strong>Hiện tại tool chỉ mới đang phát triển nên sẽ có 1 số lỗi không mong muốn Nếu các bạn muốn làm web thì có thể liên hệ mình qua website: 
+      <a href="https://aikhanh.onrender.com" target="_blank" style="color: #000; text-decoration: underline;">https://aikhanh.onrender.com</a>
+       © KHANHPC 2025| mọi quyền được bảo lưu 
+    </span>
+    <span style="padding-right: 50px;">
+      <strong>HÃY NHỚ TẢI LẠI TRANG TRƯỚC KHI DÙNG TOOL!</strong>Hiện tại tool chỉ mới đang phát triển nên sẽ có 1 số lỗi không mong muốn Nếu các bạn muốn làm web thì có thể liên hệ mình qua website: 
+      <a href="https://aikhanh.onrender.com" target="_blank" style="color: #000; text-decoration: underline;">https://aikhanh.onrender.com</a>
+       © KHANHPC 2025| mọi quyền được bảo lưu 
+    </span>
+    <span style="padding-right: 50px;">
+      <strong>HÃY NHỚ TẢI LẠI TRANG TRƯỚC KHI DÙNG TOOL!</strong>Hiện tại tool chỉ mới đang phát triển nên sẽ có 1 số lỗi không mong muốn Nếu các bạn muốn làm web thì có thể liên hệ mình qua website: 
+      <a href="https://aikhanh.onrender.com" target="_blank" style="color: #000; text-decoration: underline;">https://aikhanh.onrender.com</a>
+       © KHANHPC 2025| mọi quyền được bảo lưu 
+    </span>
+  </div>
+</div>
+<style>
+@keyframes scroll-infinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-25%);
+  }
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 tool dev KHANHPC</h1>
+    <p><strong>tool dev KHANHPC</strong> là tiện ích Chrome hỗ trợ dev web với các công cụ tiện lợi như:</p>
+    <ul>
+      <li>📄 Xem/copy HTML, rút gọn URL, lấy cookies/storage</li>
+      <li>🔍 Highlight phần tử, đếm từ, xoá modal</li>
+      <li>🛠️ Tự cuộn trang, chỉnh sửa trực tiếp, xoá CSS</li>
+      <li>🌙 Giao diện đẹp, có chế độ tối và popup có thể ghim</li>
+    </ul>
+    <div class="preview">
+      <strong>Giao diện tiện ích:</strong>
+      <img src="demo.png" alt="Ảnh xem trước tiện ích">
+    </div>
+    <a class="btn-download" href="tool-dev-KHANHPC.zip" download>Tải về tiện ích</a>
+<button class="btn-guide" onclick="toggleGuide(this)">
+  Xem hướng dẫn cài đặt <span class="arrow">▼</span>
+</button>
+
+<div class="guide" id="guide">
+  <div class="guide-inner">
+    <h2>📌 Hướng dẫn thêm vào Chrome:</h2>
+    <ol>
+      <li>
+        Giải nén file <strong>tool-dev-KHANHPC.zip</strong>
+        <img src="1.png" alt="Bước 1">
+      </li>
+      <li>
+        <p>
+  Mở Chrome → Dán vào thanh địa chỉ:
+  <code id="ext-link">chrome://extensions</code>
+  <button onclick="copyText()">📋 Copy</button>
+</p>
+
+<script>
+  function copyText() {
+    const text = document.getElementById("ext-link").innerText;
+    navigator.clipboard.writeText(text);
+    alert("Đã copy: " + text);
+  }
+</script>
+
+<style>
+  code {
+    background: #000000;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+  }
+  button {
+    margin-left: 8px;
+    cursor: pointer;
+  }
+</style>
+
+        <img src="2.png" alt="Bước 2">
+      </li>
+      <li>
+        Bật <strong>Chế độ dành cho nhà phát triển (Developer Mode)</strong> ở góc phải
+        <img src="3.png" alt="Bước 3">
+      </li>
+      <li>
+        Bấm <strong>"Tải tiện ích đã giải nén"</strong>
+        <img src="4.png" alt="Bước 4">
+      </li>
+      <li>
+        Chọn thư mục bạn vừa giải nén và xác nhận
+        <img src="5.png" alt="Bước 5">
+      </li>
+      <li>
+        Tiện ích sẽ hiện ra ngay góc trình duyệt. Bấm biểu tượng để sử dụng!
+        <img src="6.png" alt="Bước 6">
+      </li>
+    </ol>
+  </div>
+</div>
+
+<script>
+  function toggleGuide(button) {
+    const guide = document.getElementById("guide");
+    guide.classList.toggle("active");
+    button.classList.toggle("open");
+  }
+</script>
+
+</body>
+</html>
