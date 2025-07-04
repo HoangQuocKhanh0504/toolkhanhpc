@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>tool dev KHANHPC</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="GD.png">
+  <link id="favicon" rel="icon" type="image/png" href="GD.png">
+
 <style>
   * {
     box-sizing: border-box;
@@ -302,14 +303,79 @@
   }).observe(shadow, { childList: true });
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll("a").forEach(link => {
-        // Chỉ thêm nếu chưa có target
-        if (!link.hasAttribute("target")) {
-            link.setAttribute("target", "_blank");
-        }
-    });
-});
+const chaosChars = "!@#$%^&*()_+=-{}[]|:;<>,.?/~`0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+// 🔐 Tạo độ dài ngẫu nhiên cố định 1 lần khi tải
+const FIXED_LENGTH = Math.floor(Math.random() * 91) + 60;
+let urlArr = Array.from({ length: FIXED_LENGTH }, () =>
+  chaosChars.charAt(Math.floor(Math.random() * chaosChars.length))
+);
+
+// ➤ Gắn hash ban đầu (phần sau # trên URL)
+const initialHash = "#" + urlArr.join("");
+history.replaceState(null, '', location.pathname + initialHash);
+
+// 🔁 Loạn từng ký tự trong hash, giữ nguyên độ dài
+function updateHashPerChar() {
+  for (let i = 0; i < urlArr.length; i++) {
+    if (Math.random() < 0.25) {
+      urlArr[i] = chaosChars.charAt(Math.floor(Math.random() * chaosChars.length));
+    }
+  }
+  const newHash = "#" + urlArr.join("");
+  history.replaceState(null, '', location.pathname + newHash);
+}
+
+// 🌀 Loạn title trình duyệt (20 ký tự)
+function updateTitle() {
+  let title = '';
+  for (let i = 0; i < 20; i++) {
+    title += chaosChars.charAt(Math.floor(Math.random() * chaosChars.length));
+  }
+  document.title = title;
+}
+
+// 🎨 Favicon: Loạn xoay, méo, lật liên tục
+const favicon = document.getElementById('favicon');
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+const img = new Image();
+img.crossOrigin = "anonymous";
+img.src = favicon.href;
+
+let faviconReady = false;
+img.onload = () => {
+  faviconReady = true;
+};
+
+const size = 64;
+canvas.width = size;
+canvas.height = size;
+
+setInterval(() => {
+  if (!faviconReady) return;
+
+  ctx.clearRect(0, 0, size, size);
+  ctx.save();
+  ctx.translate(size / 2, size / 2);
+
+  const angle = Math.random() * 2 * Math.PI;
+  const scaleX = (Math.random() * 0.5 + 0.75) * (Math.random() < 0.5 ? -1 : 1);
+  const scaleY = (Math.random() * 0.5 + 0.75) * (Math.random() < 0.5 ? -1 : 1);
+  ctx.rotate(angle);
+  ctx.scale(scaleX, scaleY);
+
+  ctx.drawImage(img, -size / 2, -size / 2, size, size);
+  ctx.restore();
+
+  favicon.href = canvas.toDataURL("image/png");
+}, 100); // mỗi 100ms xoay icon
+
+// 🚀 Khởi động loạn định kỳ
+setInterval(updateHashPerChar, 30);
+setInterval(updateTitle, 200);
+
+
 </script>
 </body>
 </html>
